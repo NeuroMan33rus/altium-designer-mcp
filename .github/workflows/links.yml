@@ -48,4 +48,9 @@ jobs:
               # sign-in-gated Google Forms that answer 401 to any bot, so the
               # link cannot be verified here — a human with an account reaches
               # it fine. Excluded by host rather than accepting 401 globally.
-              run: lychee --include-fragments --no-progress --max-retries 3 --accept "200..=299,403,429" --exclude 'clau\.de' --root-dir "$(pwd)" --exclude-path node_modules --exclude-path target --exclude-path .venv --exclude-path tests/integration/.venv "./**/*.md"
+              # about.signpath.io is SignPath's required attribution link in
+              # docs/CODE_SIGNING_POLICY.md; it redirects to a Framer-hosted page
+              # that answers browsers and curl but gives the runner a response
+              # lychee rejects as malformed. The wording is theirs, so the host is
+              # excluded rather than the link changed.
+              run: lychee --include-fragments --no-progress --max-retries 3 --accept "200..=299,403,429" --exclude 'clau\.de' --exclude 'about\.signpath\.io' --root-dir "$(pwd)" --exclude-path node_modules --exclude-path target --exclude-path .venv --exclude-path tests/integration/.venv "./**/*.md"
